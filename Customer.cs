@@ -122,6 +122,49 @@ namespace ADODotNetFeatures
             return this.CustomerId;
         }
 
+        public int AddWithStoredProcedureWithOutParameter()
+        {
+            try
+            {
+                using (this.connection = new SqlConnection(this.connectionString))
+                {
+                    using (this.command = new SqlCommand("AddCustomer", this.connection))
+                    {
+
+                        this.command.CommandType = CommandType.StoredProcedure;
+                        this.command.Parameters.AddWithValue("@name", this.Name);
+                        this.command.Parameters.AddWithValue("@state", this.State);
+                        this.command.Parameters.AddWithValue("@city", this.City);
+                        this.command.Parameters.Add("@CustomerId", SqlDbType.Int)
+                            .Direction = ParameterDirection.Output;
+
+                        connection.Open();
+
+                        this.command.ExecuteNonQuery();
+                        this.CustomerId = Convert.ToInt32(this.command.Parameters["@CustomerId"].Value);
+
+                        connection.Close();
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Exception: " + ex.Message);
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            finally
+            {
+                if (this.connection != null && this.connection.State == ConnectionState.Open)
+                {
+                    this.connection.Close();
+                }
+            }
+            return this.CustomerId;
+        }
+
+
         public List<Customer> GetAll()
         {
             List<Customer> customerCollection = null;

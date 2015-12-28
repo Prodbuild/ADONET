@@ -12,6 +12,8 @@ namespace ADODotNetFeatures
         {
             // AddCustomer();
 
+            AddNewCustomer();
+
             // GetAllCustomer();
 
             GetAllCustomerAndOrder();
@@ -78,8 +80,29 @@ namespace ADODotNetFeatures
                     AddCustomer();
                 }
             }
+        }
 
+        static void AddNewCustomer()
+        {
+            Console.WriteLine("Provide Customer Name: ");
+            var name = Console.ReadLine();
 
+            Console.WriteLine("Provide Customer City: ");
+            var city = Console.ReadLine();
+
+            Console.WriteLine("Provide Customer State: ");
+            var state = Console.ReadLine();
+
+            var customerObj = new Customer(name, city, state);
+            if (customerObj.AddWithStoredProcedureWithOutParameter() > 0)
+            {
+                Console.WriteLine("Customer added successfully.Do you want to add more? ");
+
+                if (Console.ReadLine().ToString().ToUpper() == "Y")
+                {
+                    AddNewCustomer();
+                }
+            }
         }
     }
 }
