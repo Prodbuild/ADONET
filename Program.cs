@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ADODotNetFeatures
 {
@@ -10,11 +8,11 @@ namespace ADODotNetFeatures
     {
         static void Main(string[] args)
         {
-            // AddCustomer();
+            AddCustomer();
 
             AddNewCustomer();
 
-            // GetAllCustomer();
+            GetAllCustomer();
 
             GetAllCustomerAndOrder();
 
